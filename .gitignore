@@ -1,0 +1,54 @@
+# Directories
+Documents/
+Downloads/
+Desktop/
+Music/
+Pictures/
+Videos/
+Public/
+Templates/
+Data/
+
+# OS Generated Files
+.DS_Store            # macOS
+.Thumbnails/         # Linux
+*~
+.Trashes
+.AppleDouble
+.LSOverride
+
+# Personal Configuration & Cache files
+.aws
+.azure
+.local/
+.cache/
+.gnupg/
+.ssh/
+.mozilla/
+.dropbox/
+.gconf/
+.config/
+.dbus/
+.gnome2/
+.gnome2_private/
+.Trash/
+.docker/
+.vscode-server/
+.vscode-remote-containers/
+
+# Virtual Environments & Development Tools
+.venv/
+node_modules/
+.idea/
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# Others (customize this based on your needs)
+*.backup
+*.swp
+*.swo
+*.tmp
+*.temp
