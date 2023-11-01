@@ -20,11 +20,17 @@ Data/
 # Personal Configuration & Cache files
 .aws
 .azure
+.dotnet/
+.fonts/
 .local/
 .cache/
 .gnupg/
 .ssh/
 .mozilla/
+.pki/
+.thunderbird/
+.vscode/
+.snap/
 .dropbox/
 .gconf/
 .config/
