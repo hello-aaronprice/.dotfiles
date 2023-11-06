@@ -6,7 +6,7 @@ There is no place like home
 
 ```console
 $ git clone git@github.com:hello-aaronprice/.dotfiles.git .dotfiles
-$ cd .dotfiles
+$ cd ~/.dotfiles
 $ make
 ```
 
