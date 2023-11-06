@@ -1,14 +1,3 @@
-# Directories
-Documents/
-Downloads/
-Desktop/
-Music/
-Pictures/
-Videos/
-Public/
-Templates/
-Data/
-
 # OS Generated Files
 .DS_Store            # macOS
 .Thumbnails/         # Linux
@@ -16,31 +5,6 @@ Data/
 .Trashes
 .AppleDouble
 .LSOverride
-
-# Personal Configuration & Cache files
-.aws
-.azure
-.dotnet/
-.fonts/
-.local/
-.cache/
-.gnupg/
-.ssh/
-.mozilla/
-.pki/
-.thunderbird/
-.vscode/
-.snap/
-.dropbox/
-.gconf/
-.config/
-.dbus/
-.gnome2/
-.gnome2_private/
-.Trash/
-.docker/
-.vscode-server/
-.vscode-remote-containers/
 
 # Virtual Environments & Development Tools
 .venv/
@@ -58,3 +22,26 @@ node_modules/
 *.swo
 *.tmp
 *.temp
+
+# just to be safe
+.ssh
+id_rsa*
+authorized_keys
+*.pem
+.ssh/environment
+.aws
+credentials
+.netrc
+.gemrc
+.npmrc
+.dockercfg
+.gist-vim
+.zcompdump
+*history
+.npm
+.gem
+.go
+.config
+.vimundo
+.vimswap
+.viminfo
