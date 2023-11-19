@@ -18,15 +18,15 @@ alias h="history"
 
 # List all files colorized in long format
 # shellcheck disable=SC2139
-alias l="ls -lhF ${colorflag}"
+alias l="ls -lhF --color=auto"
 
 # List all files colorized in long format, including dot files
 # shellcheck disable=SC2139
-alias la="ls -lahF ${colorflag}"
+alias la="ls -lahF --color=auto"
 
 # List only directories
 # shellcheck disable=SC2139
-alias lsd="ls -lhF ${colorflag} | grep --color=never '^d'"
+alias lsd="ls -lhF | grep --color=never '^d'"
 
 # Always use color output for `ls`
 # shellcheck disable=SC2139
