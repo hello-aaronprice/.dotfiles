@@ -98,6 +98,8 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 
 source ~/.zsh_profile
+source ~/.dockerfunc
+source ~/.functions
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
