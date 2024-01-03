@@ -2,15 +2,16 @@
 
 # chmod +x filename
 
-languages=$(echo "golang c cpp typescript rust python bash powershell" | tr " " "\n") 
-core_utils=$(echo "find xargs sed awk ls grep"| tr " " "\n")
+selected=`cat ~/.tmux-cht-languages ~/.tmux-cht-command | fzf`
+if [[ -z $selected ]]; then
+    exit 0
+fi
 
-selected=$(echo -e "$languages\n$core_utils" | fzf)
+read -p "Enter Query: " query
 
-read -p "QUERY: " query
-
-if echo "$languages" | grep -qs $selected; then
-    tmux split-window -p 33 -h bash -c "curl cheat.sh/$selected/$(echo "$query" | tr " " "+") | less" 
+if grep -qs "$selected" ~/.tmux-cht-languages; then
+    query=`echo $query | tr ' ' '+'`
+    tmux neww bash -c "echo \"curl cht.sh/$selected/$query/\" & curl cht.sh/$selected/$query & while [ : ]; do sleep 1; done"
 else
-    tmux split-window -p 33 -h bash -c "curl cheat.sh/$selected~$query | less" 
-fi 
+    tmux neww bash -c "curl -s cht.sh/$selected~$query | less"
+fi
