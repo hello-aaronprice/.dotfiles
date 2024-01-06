@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+mkdir $HOME/.dotfiles/.bkp && mv $HOME/.zshrc $HOME/.dotfiles/.bkp
+
 pushd $DOTFILES
 for folder in $(echo $STOW_FOLDERS | sed "s/,/ /g")
 do
