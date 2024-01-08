@@ -1,6 +1,6 @@
 # .dotfiles
 
-There is no place like home
+Heavy inspiration from '[ThePrimeagen's GitHub](https://github.com/ThePrimeagen/.dotfiles)' and '[JessFraz's GitHub](https://github.com/jessfraz/dotfiles)
 
 ### Installing
 
@@ -13,6 +13,3 @@ $ ./stow
 
 This will create symlinks from this repo to your home folder.
 
-### TODO
-
-- Get STOW working to ~/bin/.local -> .dotfiles/bin/.local/
