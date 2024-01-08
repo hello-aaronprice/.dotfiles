@@ -107,5 +107,5 @@ source $ZSH/oh-my-zsh.sh
 source ~/.zsh_profile
 
 # If you come from bash you might have to change your $PATH.
-export PATH="$HOME/bin/.local/scripts:$PATH"
+export PATH="$HOME/.local/scripts:$PATH"
 #/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
