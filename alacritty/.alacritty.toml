@@ -1,16 +1,17 @@
 [font]
-size = 9
+size = 10
 
 [font.normal]
 family = "JetBrains Mono NL"
 
 [window]
-decorations = "full"
-opacity = 0.8
+decorations = "none"
+opacity = 1
+startup_mode = "Maximized"
 
 [window.padding]
-x = 7
-y = 0
+x = 2
+y = 2
 
 [bell]
 animation = "Ease"
