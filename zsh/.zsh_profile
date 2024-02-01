@@ -18,10 +18,10 @@ alias .....="cd ../../../.."
 bindkey -s ^f "tmux-sessionizer\n"
 
 # List all files colorized in long format
-alias l="ls -lhF --color=auto"
+alias l="ls -lhF --group-directories-first --color=auto"
 
 # List all files colorized in long format, including dot files
-alias la="ls -lahF --color=auto"
+alias la="ls -lahF --group-directories-first --color=auto"
 
 # List only directories
 alias lsd="ls -lhF | grep --color=never '^d'"
