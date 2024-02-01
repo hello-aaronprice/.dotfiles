@@ -108,3 +108,4 @@ source ~/.zsh_profile
 
 # If you come from bash you might have to change your $PATH.
 export PATH="$HOME/.local/scripts:$PATH"
+export XDG_CONFIG_HOME="$HOME/.config"
