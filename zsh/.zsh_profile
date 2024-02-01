@@ -4,6 +4,7 @@ alias g="git"
 alias h="history"
 alias cls="clear"
 alias e="exit"
+alias :q="exit"
 alias v="nvim"
 alias t="tmux"
 
