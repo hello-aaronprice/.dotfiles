@@ -6,6 +6,7 @@ alias cls="clear"
 alias e="exit"
 alias :q="exit"
 alias v="nvim"
+alias vim="nvim"
 alias t="tmux"
 
 # Easier navigation: .., ..., ...., ....., 
