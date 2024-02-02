@@ -1,6 +1,6 @@
 # .dotfiles
 
-Heavy inspiration from '[ThePrimeagen's GitHub](https://github.com/ThePrimeagen/.dotfiles)' and '[JessFraz's GitHub](https://github.com/jessfraz/dotfiles)
+Heavy inspiration from '[ThePrimeagen's GitHub](https://github.com/ThePrimeagen/.dotfiles)' and '[JessFraz's GitHub](https://github.com/jessfraz/dotfiles)'
 
 ### Pre-reqs
 
