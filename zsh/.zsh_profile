@@ -15,7 +15,7 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
-# Where should I put you?
+# Ctrl + F runs tmux-sessionizer script 
 bindkey -s ^f "tmux-sessionizer\n"
 
 # List all files colorized in long format
