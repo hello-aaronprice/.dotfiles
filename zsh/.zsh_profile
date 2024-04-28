@@ -8,6 +8,8 @@ alias :q="exit"
 alias v="nvim"
 alias vim="nvim"
 alias t="tmux"
+alias lg="lazygit"
+alias ipconfig="ip addr" # Eww windows
 
 # Easier navigation: .., ..., ...., ....., 
 alias ..="cd .."
