@@ -111,3 +111,4 @@ export PATH="$HOME/.local/scripts:$PATH"
 export PATH="$PATH:/usr/local/go/bin"
 export XDG_CONFIG_HOME="$HOME/.config"
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
