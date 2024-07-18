@@ -33,7 +33,11 @@ require('mason-lspconfig').setup({
     'tsserver',
     'lua_ls',
     'rust_analyzer',
-    'gopls'
+    'gopls',
+    'jsonlint',
+    'yamllint',
+    'docker-compose-language-service'
+    'dockerfile-language-server'
   },
   handlers = {
     function(server)
