@@ -29,16 +29,7 @@ local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = {
-    'tsserver',
-    'lua_ls',
-    'rust_analyzer',
-    'gopls',
-    'jsonlint',
-    'yamllint',
-    'docker-compose-language-service'
-    'dockerfile-language-server'
-  },
+  ensure_installed = {'tsserver', 'lua_ls', 'rust_analyzer', 'gopls'},
   handlers = {
     function(server)
       lspconfig[server].setup({
