@@ -1,6 +1,5 @@
-# Shortcuts
+# Fundamentals
 alias dl="cd ~/Downloads"
-alias g="git"
 alias h="history"
 alias cls="clear"
 alias e="exit"
@@ -8,30 +7,38 @@ alias :q="exit"
 alias v="nvim"
 alias vim="nvim"
 alias t="tmux"
-alias lg="lazygit"
-alias ipconfig="ip addr" # Eww windows
+
+# finds all files recursively and sorts by last modification, ignore hidden files
+alias lastmod='find . -type f -not -path "*/\.*" -exec ls -lrt {} +'
+
+# Git
+alias g="git"
+alias gp='git pull'
+alias gs='git status'
+alias lg='lazygit'
 
 # Easier navigation: .., ..., ...., ....., 
 alias ..="cd .."
 alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
+alias repos="cd $REPOS"
+alias dot="cd $DOTFILES"
+alias ghrepos="cd $GHREPOS"
+alias gr="ghrepos"
+
+# Kubernetes
+
+alias k='kubectl'
 
 # Where should I put you?
-bindkey -s ^f "tmux-sessionizer\n"
-bindkey -s ^f "tmux-sessionizer\n"
+bindkey -s "^F" 'tmux-sessionizer^M'
 
 # List all files colorized in long format
 alias l="ls -lhF --group-directories-first --color=auto"
-
-# List all files colorized in long format, including dot file
-alias la="ls -lahF --group-directories-first --color=auto"
+alias ls='ls --color=auto'
+alias la='ls -lathr --group-directories-first --color=auto'
 
 # List only directories
 alias lsd="ls -lhF | grep --color=never '^d'"
-
-# Always use color output for `ls`
-alias ls="command ls ${colorflag}"
 
 # Always enable colored `grep` output
 alias grep='grep --color=auto '
@@ -45,5 +52,6 @@ alias week='date +%V'
 # Stopwatch
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
 
-# IP addresses
+# Networking
+alias ipconfig="ip addr" # Eww windows
 alias pubip="dig +short myip.opendns.com @resolver1.opendns.com"
