@@ -16,7 +16,6 @@ export REPOS="$HOME/Data"
 export GITUSER="hello-aaronprice"
 export GHREPOS="$REPOS/github.com/$GITUSER"
 export DOTFILES="$HOME/.dotfiles"
-export LAB="$GHREPOS/lab"
 export SCRIPTS="$DOTFILES/bin/.local/scripts"
 
 # Go related. In general all executables and scripts go in .local/bin
