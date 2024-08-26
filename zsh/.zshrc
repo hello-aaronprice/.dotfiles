@@ -64,18 +64,23 @@ setopt SHARE_HISTORY      # Share history between sessions
 # ~~~~~~~~~~~~~~~ Prompt ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-fpath+=($HOME/.dotfiles/zsh/pure)
+fpath=($DOTFILES/zsh/pure $fpath)
 
 autoload -U promptinit; promptinit
+
+PURE_CMD_MAX_EXEC_TIME=10
+
+zstyle :prompt:pure:git:stash show yes
+
 prompt pure
 
 
 # ~~~~~~~~~~~~~~~ Misc ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-source ~/.zsh_profile
-
 fpath=($DOTFILES/zsh/zsh-completions/src $fpath)
+
+source ~/.zsh_profile
 
 export XDG_CONFIG_HOME="$HOME/.config"
 
