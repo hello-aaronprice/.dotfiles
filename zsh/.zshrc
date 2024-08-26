@@ -37,7 +37,9 @@ path=(
     $HOME/.local/bin
     $HOME/dotnet
     $SCRIPTS
+    $DOTFILES/zsh/zsh-completions
     /usr/local/go/bin
+    /home/linuxbrew/.linuxbrew/bin
 )
 
 # Remove duplicate entries and non-existent directories
@@ -72,6 +74,8 @@ prompt pure
 
 
 source ~/.zsh_profile
+
+fpath=($DOTFILES/zsh/zsh-completions/src $fpath)
 
 export XDG_CONFIG_HOME="$HOME/.config"
 
