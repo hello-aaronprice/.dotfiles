@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# chmod +x filename
+
+if ! command -v htmlq -h &> /dev/null
+then
+    echo "HTMLQ could not be found, please install"
+    exit 1
+fi
+
+selected=$(curl --silent -L devhints.io | htmlq --attribute href a | grep -v "^https:" | sort -u | fzf --tmux center)
+
+if [ -n "$selected" ]; then 
+    tmux splitw -h "curl --silent -L devhints.io/$selected | htmlq -tp main | less -R"
+else
+    echo "No selection was made."
+fi
