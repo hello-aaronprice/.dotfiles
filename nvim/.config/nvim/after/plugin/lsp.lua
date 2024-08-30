@@ -67,32 +67,23 @@ vim.diagnostic.config({
         source = 'always',
     },
 })
-
-require('lspconfig').lua_ls.setup({})
-require('lspconfig').rust_analyzer.setup({})
-require('lspconfig').pyright.setup({})
-require('lspconfig').dockerls.setup({})
-require('lspconfig').docker_compose_language_service.setup({})
-require('lspconfig').gopls.setup({})
-require('lspconfig').terraformls.setup({})
-require('lspconfig').yamlls.setup({})
-
-require("mason").setup({
-    ui = {
-        icons = {
-            package_installed = "✓",
-            package_pending = "➜",
-            package_uninstalled = "✗"
-        }
-    }
-})
+require("mason").setup({})
 require('mason-lspconfig').setup({
   -- Replace the language servers listed here 
   -- with the ones you want to install
+  -- Very Important to install NodeJS for some LSPs
+  -- https://github.com/williamboman/mason-lspconfig.nvim/issues/273
   ensure_installed = {'lua_ls', 'rust_analyzer', 'pyright', 'dockerls', 'docker_compose_language_service', 'gopls', 'terraformls', 'yamlls'},
   handlers = {
     function(server_name)
       require('lspconfig')[server_name].setup({})
+    end,
+    lua_ls = function()
+      require('lspconfig').lua_ls.setup({
+        on_init = function(client)
+          lsp_zero.nvim_lua_settings(client, {})
+        end,
+      })
     end,
   },
 })
