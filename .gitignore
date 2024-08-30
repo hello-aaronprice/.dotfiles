@@ -1,2 +1,2 @@
 .bkp/*
-bin/.local/share/nvim
+.local/share/nvim*
