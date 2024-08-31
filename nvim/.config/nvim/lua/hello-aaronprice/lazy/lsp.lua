@@ -15,8 +15,29 @@ return {
     },
 
     config = function()
+        local lsp_zero = require('lsp-zero')
+
+        lsp_zero.extend_lspconfig({
+            sign_text = true,
+            lsp_attach = _G.LspAttachAutoCmd
+        })
+
+        lsp_zero.ui({
+            float_border = 'rounded',
+            sign_text = {
+              error = '✘',
+              warn = '▲',
+              hint = '⚑',
+              info = '»',
+          },
+        })
+
         local cmp = require('cmp')
         local cmp_lsp = require("cmp_nvim_lsp")
+        local cmp_select = { behavior = cmp.SelectBehavior.Select }
+        local cmp_action = require("lsp-zero").cmp_action()
+        local cmp_format = require("lsp-zero").cmp_format({details = true})
+
         local capabilities = vim.tbl_deep_extend(
             "force",
             {},
@@ -50,7 +71,6 @@ return {
             }
         })
 
-        local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
         cmp.setup({
             snippet = {
@@ -58,13 +78,21 @@ return {
                     require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
                 end,
             },
+            formatting = cmp_format,
             mapping = cmp.mapping.preset.insert({
+                ['<Tab>'] = cmp_action.tab_complete(),
+                ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                ['<C-b>'] = cmp.mapping.scroll_docs(-4),
                 ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
                 ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-                ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+                ['<CR>'] = cmp.mapping.confirm({ select = true }),
                 ["<C-Space>"] = cmp.mapping.complete(),
 
             }),
+            window = {
+                completion = cmp.config.window.bordered(),
+                documentation = cmp.config.window.bordered(),
+            },
             sources = cmp.config.sources({
                 { name = 'nvim_lsp' },
                 { name = 'luasnip' }, -- For luasnip users.

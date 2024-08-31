@@ -29,7 +29,7 @@ return {
 
         require('telescope').load_extension('terraform_doc')
         local terraform_docs = require('telescope').load_extension('terraform_doc')
-        vim.keymap.set('n', '<leader>tfaz', ":Telescope terraform_doc fullname=hashicorp/azurerm<cr>")
- 
+        vim.keymap.set('n', '<leader>tfaz', ":Telescope terraform_doc full_name=hashicorp/azurerm<cr>")
+        vim.keymap.set('n', '<leader>az', "<cmd>Telescope terraform_doc full_name=hashicopr/azurerm<cr>")
     end
 }
