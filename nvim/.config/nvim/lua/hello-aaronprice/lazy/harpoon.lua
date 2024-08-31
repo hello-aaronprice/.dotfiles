@@ -9,12 +9,12 @@ return {
 
     config = function ()
         local harpoon = require('harpoon')
-        harpoon:setup()
+        harpoon:setup({})
         local conf = require('telescope.config').values
         local function toggle_telescope(harpoon_files)
             local file_paths = {}
             for _, item in ipairs(harpoon_files.items) do
-                table.insert(file_paths, item.values)
+                table.insert(file_paths, item.value)
             end
 
             require('telescope.pickers').new({}, {
@@ -22,9 +22,9 @@ return {
                 finder = require('telescope.finders').new_table({
                     results = file_paths,
                 }),
-                sorter = conf.generic_sorter({}),
                 previewer = conf.file_previewer({}),
-            })find()
+                sorter = conf.generic_sorter({}),
+            }):find()
         end
 
         vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
