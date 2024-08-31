@@ -11,7 +11,7 @@ return {
     {
         "erikbackman/brightburn.vim",
     },
-    
+
     {
         "rebelot/kanagawa.nvim",
         name = "kanagawa",
@@ -169,8 +169,8 @@ return {
                     -- },
                 },
                 highlight_groups = {
-                    -- Comment = { fg = "foam" },
-                    -- VertSplit = { fg = "muted", bg = "muted" },
+                    StatusLine = { fg = "love", bg = "love", blend = 10 },
+                    StatusLineNC = { fg = "subtle", bg = "surface" },
                 },
                 before_highlight = function(group, highlight, palette)
                     -- Disable all undercurls
