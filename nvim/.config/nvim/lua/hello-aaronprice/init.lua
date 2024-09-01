@@ -2,53 +2,76 @@ require("hello-aaronprice.set")
 require("hello-aaronprice.remap")
 require("hello-aaronprice.lazy_init")
 
-local function lsp_keymaps(e)
-    local opts = {buffer = e.buf}
-    vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-    vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-    vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
-    vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-    vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
-    vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
-    vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
-    vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-    vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
-    vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
+local function autocmd(name)
+    return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
 end
 
-local augroup = vim.api.nvim_create_augroup
-local helloaaronprice = augroup('aaronprice', {})
-
-local autocmd = vim.api.nvim_create_autocmd
-local yank_group = augroup('HighlightYank', {})
 
 function R(name)
     require("plenary.reload").reload_module(name)
 end
 
-vim.filetype.add({
-    extension = {
-        templ = 'templ',
-    }
-})
-
-autocmd('TextYankPost', {
-    group = yank_group,
-    pattern = '*',
+-- Highlight on yank
+vim.api.nvim_create_autocmd("TextYankPost", {
+    group = autocmd("highlight_yank"),
     callback = function()
-        vim.highlight.on_yank({
-            higroup = 'IncSearch',
-            timeout = 40,
-        })
+        vim.highlight.on_yank()
     end,
 })
 
-autocmd('LspAttach', {
-    group = helloaaronprice,
-    callback = lsp_keymaps
+vim.api.nvim_create_autocmd("BufWritePre", {
+    group = autocmd("BufWritePre"),
+    pattern = "*",
+    command = [[%s/\s\+$//e]],
 })
 
-_G.LspAttachAutoCmd = lsp_keymaps
+-- go to last loc when opening a buffer
+vim.api.nvim_create_autocmd("BufReadPost", {
+    group = autocmd("last_loc"),
+    callback = function(event)
+        local exclude = { "gitcommit" }
+        local buf = event.buf
+        if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then
+            return
+        end
+        vim.b[buf].lazyvim_last_loc = true
+        local mark = vim.api.nvim_buf_get_mark(buf, '"')
+        local lcount = vim.api.nvim_buf_line_count(buf)
+        if mark[1] > 0 and mark[1] <= lcount then
+            pcall(vim.api.nvim_win_set_cursor, 0, mark)
+        end
+    end,
+})
+
+-- close some filetypes with <q>
+vim.api.nvim_create_autocmd("FileType", {
+    group = autocmd("close_with_q"),
+    pattern = {
+        "PlenaryTestPopup",
+        "grug-far",
+        "help",
+        "lspinfo",
+        "notify",
+        "qf",
+        "spectre_panel",
+        "startuptime",
+        "tsplayground",
+        "neotest-output",
+        "checkhealth",
+        "neotest-summary",
+        "neotest-output-panel",
+        "dbout",
+        "gitsigns.blame",
+    },
+    callback = function(event)
+        vim.bo[event.buf].buflisted = false
+        vim.keymap.set("n", "q", "<cmd>close<cr>", {
+            buffer = event.buf,
+            silent = true,
+            desc = "Quit buffer",
+        })
+    end,
+})
 
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
