@@ -17,7 +17,6 @@ vim.opt.backup = false
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 
-
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
@@ -29,8 +28,9 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
-vim.opt.colorcolumn = "80"
+-- vim.opt.colorcolumn = "80"
 
 vim.opt.laststatus = 2 -- Or 3 for global statusline
 vim.opt.statusline = " %f %m %= %l:%c ♥ "
 
+vim.treesitter.language.register("markdown", "vimwiki")
