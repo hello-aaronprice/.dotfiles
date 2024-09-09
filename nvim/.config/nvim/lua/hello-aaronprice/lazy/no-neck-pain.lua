@@ -1,15 +1,19 @@
 return {
-	"shortcuts/no-neck-pain.nvim",
-	keys = { { "<leader>nn", "<cmd>NoNeckPain<cr>", desc = "[N]o [N]eckpain" } },
-	config = function()
-		require("no-neck-pain").setup({
-			width = 150,
+	{
+		"shortcuts/no-neck-pain.nvim",
+		lazy = false,
+		opts = {
+			width = 125,
+			minSideBufferWidth = 0,
 			autocmds = {
-				skipEnteringNoNeckPainBuffer = true,
+				enableonVimEnter = true,
 			},
-			bufferOptionsColors = {
-				background = "rose-pine-dawn",
+			integration = {
+				undotree = {
+					position = "left",
+				},
 			},
-		})
-	end,
+		},
+		keys = { { "<leader>nn", "<cmd>NoNeckPain<cr>", desc = "[N]o [N]eckpain" } },
+	},
 }
