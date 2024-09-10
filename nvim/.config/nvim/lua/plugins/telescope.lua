@@ -20,6 +20,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
 		},
 		{ "ANGkeith/telescope-terraform-doc.nvim" },
 		{ "nvim-telescope/telescope-ui-select.nvim" },
+		{ "nvim-telescope/telescope-live-grep-args.nvim" },
 		{ "echasnovski/mini.icons", enabled = vim.g.have_nerd_font },
 	},
 	config = function()
@@ -45,17 +46,35 @@ return { -- Fuzzy Finder (files, lsp, etc)
 
 		-- [[ Configure Telescope ]]
 		-- See `:help telescope` and `:help telescope.setup()`
+		local telescopeConfig = require("telescope.config")
+		-- Clone the default Telescope configuration
+		local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
+		-- I want to search in hidden/dot files.
+		table.insert(vimgrep_arguments, "--hidden")
+		-- I don't want to search in the `.git` directory.
+		table.insert(vimgrep_arguments, "--glob")
+		table.insert(vimgrep_arguments, "!**/.git/*")
+
 		require("telescope").setup({
 			-- You can put your default mappings / updates / etc. in here
 			--  All the info you're looking for is in `:help telescope.setup()`
 			--
-			-- defaults = {
-			--   mappings = {
-			--     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-			--   },
-
-			-- },
-			-- pickers = {}
+			defaults = {
+				vimgrep_arguments = vimgrep_arguments,
+				path_display = { "truncate" },
+			},
+			pickers = {
+				find_files = {
+					find_command = { "rg", "--files", "-L", "--hidden", "--glob", "!**/.git/*" },
+				},
+				-- Default configuration for builtin pickers goes here:
+				-- picker_name = {
+				--   picker_config_key = value,
+				--   ...
+				-- }
+				-- Now the picker_config_key will be applied every time you call this
+				-- builtin picker
+			},
 			extensions = {
 				["ui-select"] = {
 					require("telescope.themes").get_dropdown(),
@@ -63,19 +82,31 @@ return { -- Fuzzy Finder (files, lsp, etc)
 			},
 		})
 		-- Enable telescope extensions, if they are installed
+		-- See `:help telescope.builtin`
 
 		pcall(require("telescope").load_extension, "fzf")
 		pcall(require("telescope").load_extension, "ui-select")
+		pcall(require("telescope").load_extension, "live_grep_args")
 
-		-- See `:help telescope.builtin`
+		vim.keymap.set(
+			"n",
+			"<leader>fg",
+			"<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
+			{ desc = "Live Grep" }
+		)
+		vim.keymap.set(
+			"n",
+			"<leader>fc",
+			'<cmd>lua require("telescope.builtin").live_grep({ glob_pattern = "!{spec,test}"})<CR>',
+			{ desc = "Live Grep Code" }
+		)
 		local builtin = require("telescope.builtin")
-		vim.keymap.set("n", "<C-p>", builtin.git_files, {})
+		vim.keymap.set("n", "<C-p>", builtin.git_files, { desc = "Search GitFiles" })
 		vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
 		vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
 		vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
 		vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
 		vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
-		vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
 		vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
 		vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
 		vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
@@ -107,7 +138,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
 		vim.keymap.set(
 			"n",
 			"<leader>az",
-			"<cmd>Telescope terraform_doc full_name=hashicopr/azurerm<cr>",
+			"<cmd>Telescope terraform_doc full_name=hashicorp/azurerm<cr>",
 			{ silent = true }
 		)
 	end,

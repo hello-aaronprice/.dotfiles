@@ -2,7 +2,7 @@
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Open NetRW" })
+vim.keymap.set("n", "<leader>pv", "<cmd>Oil --float<cr>", { desc = "Open Oil" })
 
 -- Navigation and manipulation essentials
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
