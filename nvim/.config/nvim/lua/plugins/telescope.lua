@@ -45,7 +45,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
 		-- do as well as how to actually do it!
 
 		-- [[ Configure Telescope ]]
-		-- See `:help telescope` and `:help telescope.setup()`
+		-- Get existing telescope config for `grep` argument and add some custom arguments
 		local telescopeConfig = require("telescope.config")
 		-- Clone the default Telescope configuration
 		local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
@@ -55,10 +55,10 @@ return { -- Fuzzy Finder (files, lsp, etc)
 		table.insert(vimgrep_arguments, "--glob")
 		table.insert(vimgrep_arguments, "!**/.git/*")
 
+		-- See `:help telescope` and `:help telescope.setup()`
 		require("telescope").setup({
 			-- You can put your default mappings / updates / etc. in here
 			--  All the info you're looking for is in `:help telescope.setup()`
-			--
 			defaults = {
 				vimgrep_arguments = vimgrep_arguments,
 				path_display = { "truncate" },
