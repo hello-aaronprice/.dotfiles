@@ -90,7 +90,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
 
 		vim.keymap.set(
 			"n",
-			"<leader>fg",
+			"<leader>sg",
 			"<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
 			{ desc = "Live Grep" }
 		)
@@ -123,7 +123,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
 
 		-- Also possible to pass additional configuration options.
 		--  See `:help telescope.builtin.live_grep()` for information about particular keys
-		vim.keymap.set("n", "<leader>s/", function()
+		vim.keymap.set("n", "<leader>g/", function()
 			builtin.live_grep({
 				grep_open_files = true,
 				prompt_title = "Live Grep in Open Files",

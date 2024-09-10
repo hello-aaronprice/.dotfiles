@@ -14,6 +14,9 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+vim.opt.laststatus = 3 -- Or 3 for global statusline
+vim.opt.statusline = " %f %m %= %l:%c ♥ "
+
 require("lazy").setup("plugins", {
 	change_detection = {
 		notify = false,
