@@ -3,14 +3,15 @@ return {
 		"shortcuts/no-neck-pain.nvim",
 		lazy = false,
 		opts = {
-			width = 125,
+			width = 150,
 			minSideBufferWidth = 0,
 			autocmds = {
-				enableonVimEnter = true,
+				skipEnteringNoNeckPainBuffer = true,
+				enableOnVimEnter = false,
 			},
-			integration = {
+			integrations = {
 				undotree = {
-					position = "left",
+					position = "right",
 				},
 			},
 		},

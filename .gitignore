@@ -1,2 +1,10 @@
 .bkp/*
 .local/share/nvim*
+nvim/.config/gh
+nvim/.config/go
+nvim/.config/htop
+nvim/.config/lazygit
+nvim/.config/nvim.bkp
+nvim/.config/procps
+zsh/zsh-completions
+zsh/pure

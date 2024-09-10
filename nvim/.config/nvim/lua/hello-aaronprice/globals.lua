@@ -1,7 +1,3 @@
-require("hello-aaronprice.set")
-require("hello-aaronprice.remap")
-require("hello-aaronprice.lazy_init")
-
 local function autocmd(name)
 	return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
 end

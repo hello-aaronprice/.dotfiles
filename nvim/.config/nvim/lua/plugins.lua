@@ -17,4 +17,21 @@ return {
 			enhanced_diff_hl = true,
 		},
 	},
+	{
+		"samharju/yeet.nvim",
+		dependencies = {
+			"stevearc/dressing.nvim", -- optional, provides sane UX
+		},
+		version = "*", -- update only on releases
+		cmd = "Yeet",
+		opts = {},
+	},
+	{
+		"ggandor/leap.nvim",
+		config = function()
+			local leap = require("leap")
+			leap.add_default_mappings()
+			leap.opts.case_sensitive = true
+		end,
+	},
 }
