@@ -87,18 +87,13 @@ return { -- Fuzzy Finder (files, lsp, etc)
 		pcall(require("telescope").load_extension, "fzf")
 		pcall(require("telescope").load_extension, "ui-select")
 		pcall(require("telescope").load_extension, "live_grep_args")
+		pcall(require("telescope").load_extension, "noice")
 
 		vim.keymap.set(
 			"n",
 			"<leader>sg",
 			"<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
 			{ desc = "Live Grep" }
-		)
-		vim.keymap.set(
-			"n",
-			"<leader>fc",
-			'<cmd>lua require("telescope.builtin").live_grep({ glob_pattern = "!{spec,test}"})<CR>',
-			{ desc = "Live Grep Code" }
 		)
 		local builtin = require("telescope.builtin")
 		vim.keymap.set("n", "<C-p>", builtin.git_files, { desc = "Search GitFiles" })

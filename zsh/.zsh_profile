@@ -17,7 +17,7 @@ alias gp='git pull'
 alias gs='git status'
 alias lg='lazygit'
 
-# Easier navigation: .., ..., ...., ....., 
+# Easier navigation: .., ..., ...., .....,
 alias ..="cd .."
 alias ...="cd ../.."
 alias repos="cd $REPOS"
@@ -37,8 +37,9 @@ alias tf="terraform "
 bindkey -s "^F" 'tmux-sessionizer^M'
 
 # List all files colorized in long format
+alias ls="eza --icons=always"
 alias l="ls -lhF --group-directories-first --color=auto"
-alias ls='ls --color=auto'
+#alias ls='ls --color=auto'
 alias la='ls -lathr --group-directories-first --color=auto'
 
 # List only directories

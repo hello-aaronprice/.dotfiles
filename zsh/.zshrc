@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # ~~~~~~~~~~~~~~~ Environment Variables ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -64,15 +71,11 @@ setopt SHARE_HISTORY      # Share history between sessions
 # ~~~~~~~~~~~~~~~ Prompt ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-fpath=($DOTFILES/zsh/pure $fpath)
-
-autoload -U promptinit; promptinit
-
-PURE_CMD_MAX_EXEC_TIME=10
-
-zstyle :prompt:pure:git:stash show yes
-
-prompt pure
+#fpath=($DOTFILES/zsh/pure $fpath)
+#autoload -U promptinit; promptinit
+#PURE_CMD_MAX_EXEC_TIME=10
+#zstyle :prompt:pure:git:stash show yes
+#prompt pure
 
 
 # ~~~~~~~~~~~~~~~ Misc ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -83,6 +86,12 @@ fpath=($DOTFILES/zsh/zsh-completions/src $fpath)
 source ~/.zsh_profile
 
 export XDG_CONFIG_HOME="$HOME/.config"
+# This is not the best idea
 export XDG_DATA_HOME="$DOTFILES/.local/share"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+source /home/linuxbrew/.linuxbrew/share/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

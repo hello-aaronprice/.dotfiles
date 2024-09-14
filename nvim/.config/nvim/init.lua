@@ -19,7 +19,7 @@ vim.opt.statusline = " %f %m %= %l:%c ♥ "
 
 require("lazy").setup("plugins", {
 	change_detection = {
-		notify = false,
+		notify = true,
 	},
 })
 
