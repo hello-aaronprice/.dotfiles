@@ -71,11 +71,10 @@ setopt SHARE_HISTORY      # Share history between sessions
 # ~~~~~~~~~~~~~~~ Prompt ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-#fpath=($DOTFILES/zsh/pure $fpath)
-#autoload -U promptinit; promptinit
-#PURE_CMD_MAX_EXEC_TIME=10
-#zstyle :prompt:pure:git:stash show yes
-#prompt pure
+source /home/linuxbrew/.linuxbrew/share/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 
 # ~~~~~~~~~~~~~~~ Misc ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -91,7 +90,3 @@ export XDG_DATA_HOME="$DOTFILES/.local/share"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-source /home/linuxbrew/.linuxbrew/share/powerlevel10k/powerlevel10k.zsh-theme
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
