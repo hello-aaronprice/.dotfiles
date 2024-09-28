@@ -1,17 +1,18 @@
 [font]
-size = 9 
+size = 9
 
 [font.normal]
-family = "MesloLGSDZ Nerd Font Mono"
+family = "0xProto Nerd Font"
 
 [window]
-decorations = "none"
-opacity = 0.8
+decorations = "Full"
+opacity = 0.95
+dynamic_paddding = true
 startup_mode = "Maximized"
 
 [window.padding]
-x = 2
-y = 2
+x = 1
+y = 1
 
 [bell]
 animation = "Ease"

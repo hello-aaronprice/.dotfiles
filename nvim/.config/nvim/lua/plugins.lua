@@ -18,15 +18,6 @@ return {
 		},
 	},
 	{
-		"samharju/yeet.nvim",
-		dependencies = {
-			"stevearc/dressing.nvim", -- optional, provides sane UX
-		},
-		version = "*", -- update only on releases
-		cmd = "Yeet",
-		opts = {},
-	},
-	{
 		"ggandor/leap.nvim",
 		config = function()
 			local leap = require("leap")
@@ -88,5 +79,32 @@ return {
 	},
 	{
 		"mg979/vim-visual-multi",
+	},
+	{
+		"voldikss/vim-floaterm",
+		config = function()
+			vim.keymap.set(
+				"n",
+				"<leader>ft",
+				"<cmd>:FloatermNew --height=0.7 --width=0.8 --wintype=float --name=floaterm1 --position=center --autoclose=2<CR>",
+				{ desc = "Open FloatTerm" }
+			)
+			vim.keymap.set("n", "<leader>flt", "<cmd>:FloatermToggle<CR>", { desc = "Toggle FloatTerm" })
+			vim.keymap.set("t", "<leader>flt", "<cmd>:FloatermToggle<CR>", { desc = "Toggle FloatTerm" })
+		end,
+	},
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		opts = {},
+		keys = {
+			{
+				"<leader>?",
+				function()
+					require("which-key").show({ global = false })
+				end,
+				desc = "Buffer Local Keymaps (which-key)",
+			},
+		},
 	},
 }
