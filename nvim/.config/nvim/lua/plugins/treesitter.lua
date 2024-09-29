@@ -16,6 +16,8 @@ return { -- Highlight, edit, and navigate code
 			"query",
 			"vim",
 			"vimdoc",
+			"rust",
+			"toml",
 		},
 
 		-- Autoinstall languages that are not installed

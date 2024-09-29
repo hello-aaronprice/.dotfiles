@@ -14,15 +14,29 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-vim.opt.laststatus = 3 -- Or 3 for global statusline
-vim.opt.statusline = " %f %m %= %l:%c ♥ "
+-- vim.opt.laststatus = 3 -- Or 3 for global statusline
+-- vim.opt.statusline = " %f %m %= %l:%c ♥ "
+require("hello-aaronprice.set")
+require("hello-aaronprice.remap")
+require("hello-aaronprice.globals")
 
 require("lazy").setup("plugins", {
 	change_detection = {
 		notify = true,
 	},
+	performance = {
+		rtp = {
+			-- disable some rtp plugins
+			disabled_plugins = {
+				"gzip",
+				-- "matchit",
+				-- "matchparen",
+				-- "netrwPlugin",
+				"tarPlugin",
+				"tohtml",
+				"tutor",
+				"zipPlugin",
+			},
+		},
+	},
 })
-
-require("hello-aaronprice.set")
-require("hello-aaronprice.remap")
-require("hello-aaronprice.globals")

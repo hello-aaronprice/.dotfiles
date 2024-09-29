@@ -4,11 +4,6 @@ return {
 		name = "plenary",
 	},
 	{
-		"fatih/vim-go",
-		build = ":GoUpdateBinaries",
-		ft = "go",
-	},
-	{
 		"sindrets/diffview.nvim",
 		cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewFileHistory" },
 		dependencies = "nvim-lua/plenary.nvim",
@@ -18,12 +13,18 @@ return {
 		},
 	},
 	{
-		"ggandor/leap.nvim",
-		config = function()
-			local leap = require("leap")
-			leap.add_default_mappings()
-			leap.opts.case_sensitive = true
-		end,
+		"folke/flash.nvim",
+		event = "VeryLazy",
+		---@type Flash.Config
+		opts = {},
+        -- stylua: ignore
+          keys = {
+            { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+            { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+            { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+            { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+            { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+          },
 	},
 	{
 		"stevearc/oil.nvim",
@@ -106,5 +107,11 @@ return {
 				desc = "Buffer Local Keymaps (which-key)",
 			},
 		},
+	},
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		config = true,
+		opts = {},
 	},
 }

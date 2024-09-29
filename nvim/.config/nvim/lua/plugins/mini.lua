@@ -2,8 +2,8 @@ return {
 	"echasnovski/mini.nvim",
 	config = function()
 		require("mini.icons").setup()
-		require("mini.diff").setup()
-		require("mini.git").setup()
+		-- require("mini.diff").setup()
+		-- require("mini.git").setup()
 
 		local animate = require("mini.animate")
 		animate.setup({

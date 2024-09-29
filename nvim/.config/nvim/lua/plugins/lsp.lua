@@ -21,6 +21,7 @@ return {
 			opts.sources = opts.sources or {}
 			table.insert(opts.sources, {
 				name = "lazydev",
+				"crates",
 				group_index = 0, -- set group index to 0 to skip loading LuaLS completions
 			})
 		end,
@@ -40,6 +41,9 @@ return {
 
 			-- Allows extra capabilities provided by nvim-cmp
 			"hrsh7th/cmp-nvim-lsp",
+		},
+		opts = {
+			document_highlight = { enabled = false },
 		},
 		config = function()
 			-- Brief aside: **What is LSP?**
@@ -170,7 +174,6 @@ return {
 					end
 				end,
 			})
-
 			-- LSP servers and clients are able to communicate to each other what features they support.
 			--  By default, Neovim doesn't support everything that is in the LSP specification.
 			--  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
@@ -202,6 +205,21 @@ return {
 				-- }```
 				pyright = {},
 				rust_analyzer = {},
+				taplo = {
+					keys = {
+						{
+							"K",
+							function()
+								if vim.fn.expand("%:t") == "Cargo.toml" and require("crates").popup_available() then
+									require("crates").show_popup()
+								else
+									vim.lsp.buf.hover()
+								end
+							end,
+							desc = "Show Crate Documentation",
+						},
+					},
+				},
 				terraformls = {},
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 				--
@@ -214,7 +232,7 @@ return {
 				lua_ls = {
 					-- cmd = {...},
 					-- filetypes = { ...},
-					-- capabilities = {},
+					capabilities = {},
 					settings = {
 						Lua = {
 							completion = {
@@ -232,30 +250,38 @@ return {
 			--    :Mason
 			--
 			--  You can press `g?` for help in this menu.
-			require("mason").setup()
+			require("mason").setup({
+				ui = {
+					icons = {
+						package_installed = "",
+						package_pending = "",
+						package_uninstalled = "",
+					},
+				},
+			})
 			-- You can add other tools here that you want Mason to install
 			-- for you, so that they are available from within Neovim.
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format Lua code
-				"rust_analyzer",
 				"pyright",
 				"dockerls",
 				"docker_compose_language_service",
 				"gopls",
 				"terraformls",
 				"yamlls",
+				"codelldb",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 			require("mason-lspconfig").setup({
 				handlers = {
+					["rust_analyzer"] = function() end,
 					function(server_name)
 						local server = servers[server_name] or {}
 						-- This handles overriding only values explicitly passed
 						-- by the server configuration above. Useful when disabling
 						-- certain features of an LSP (for example, turning off formatting for tsserver)
-
 						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
 						require("lspconfig")[server_name].setup(server)
 					end,
@@ -336,6 +362,15 @@ return {
 					},
 				},
 			},
+			{ -- Rust crates support
+				"Saecki/crates.nvim",
+				event = { "BufRead Cargo.toml" },
+				opts = {
+					completion = {
+						cmp = { enabled = true },
+					},
+				},
+			},
 			"saadparwaiz1/cmp_luasnip",
 
 			-- Adds other completion capabilities.
@@ -344,6 +379,7 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-cmdline",
+			"hrsh7th/cmp-buffer",
 		},
 		config = function()
 			-- See `:help cmp`
@@ -407,9 +443,6 @@ return {
 							luasnip.jump(-1)
 						end
 					end, { "i", "s" }),
-
-					-- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
-					--    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
 				}),
 				sources = {
 					{
@@ -417,9 +450,28 @@ return {
 						-- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
 						group_index = 0,
 					},
-					{ name = "nvim_lsp" },
+					{ name = "nvim_lsp", keyword_length = 3 },
+					{ name = "buffer", keyword_length = 2 },
 					{ name = "luasnip" },
 					{ name = "path" },
+				},
+				window = {
+					completion = cmp.config.window.bordered(),
+					documentation = cmp.config.window.bordered(),
+				},
+				formatting = {
+					expandable_indicator = true,
+					fields = { "menu", "abbr", "kind" },
+					format = function(entry, item)
+						local menu_icon = {
+							nvim_lsp = "λ",
+							luasnip = "⋗",
+							buffer = "Ω",
+							path = "🖫",
+						}
+						item.menu = menu_icon[entry.source.name]
+						return item
+					end,
 				},
 			})
 			-- `/` cmdline setup.
@@ -444,5 +496,7 @@ return {
 				}),
 			})
 		end,
+	},
+	{ -- DAP
 	},
 }
