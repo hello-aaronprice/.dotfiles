@@ -16,18 +16,18 @@ vim.keymap.set("n", "<S-Tab>", "<C-W>W", { desc = "Switch buffer" })
 vim.keymap.set("n", "<C-W>v", "<C-W>v<CR><C-W>l", { desc = "Switch buffer" })
 
 -- Paste without overwriting register
-vim.keymap.set("x", "<leader>p", [["_dP]])
+vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste without overwriting register" })
 
 -- next greatest remap ever : asbjornHaland
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank to system clipboard" })
+vim.keymap.set("n", "<leader>Y", [["+Y]], { desc = "Yank to system clipboard" })
 
-vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
-vim.keymap.set("i", "<C-c>", "<Esc>")
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-vim.keymap.set("n", "Q", "<nop>")
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete to void register" })
+vim.keymap.set("i", "<C-c>", "<Esc>", { desc = "Escape" })
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Turn off highlights from search" })
+vim.keymap.set("n", "Q", "<nop>", { desc = "Also Escape" })
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmuxhsessionizer<CR>")
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+-- vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { desc = "Format current buffer"})
 
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")

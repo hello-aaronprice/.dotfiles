@@ -26,18 +26,16 @@ alias ghrepos="cd $GHREPOS"
 alias gr="ghrepos"
 
 # Kubernetes
-
 alias k='kubectl'
 
 # Terraform
-
 alias tf="terraform "
 
 # Where should I put you?
 bindkey -s "^F" 'tmux-sessionizer^M'
 
 # List all files colorized in long format
-alias ls="eza -lh --icons=always --colour=auto --colour-scale=age --colour-scale-mode=gradient --group-directories-first --git --no-user --time-style=long-iso"
+alias ls="eza -lh --icons=always --colour=auto --colour-scale=age --colour-scale-mode=gradient --group-directories-first --git --time-style=long-iso"
 alias l="ls -A"
 alias la="ls -A -s=modified"
 alias lall="la"

@@ -24,13 +24,8 @@ export GITUSER="hello-aaronprice"
 export GHREPOS="$REPOS/github.com/$GITUSER"
 export DOTFILES="$HOME/.dotfiles"
 export SCRIPTS="$DOTFILES/bin/.local/scripts"
-
-# Go related. In general all executables and scripts go in .local/bin
-
-# export GOBIN="$HOME/.local/bin"
-# export GOPRIVATE="github.com/$GITUSER/*,gitlab.com/$GITUSER/*"
 export GOPATH="$HOME/go"
-export GOBIN="/usr/local/go/bin"
+export GOBIN="$HOME/go/bin"
 
 # ~~~~~~~~~~~~~~~ Path configuration ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -44,6 +39,8 @@ path=(
     $HOME/dotnet
     $SCRIPTS
     $DOTFILES/zsh/zsh-completions
+    $GOPATH
+    $GOBIN
     /usr/local/go/bin
     /home/linuxbrew/.linuxbrew/bin
 )
@@ -89,3 +86,10 @@ export XDG_DATA_HOME="$DOTFILES/.local/share"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# pnpm
+export PNPM_HOME="/home/aaron/.dotfiles/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
