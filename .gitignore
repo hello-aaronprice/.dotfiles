@@ -1,5 +1,6 @@
 .bkp/*
 .local/share/nvim*
+.local/share/pnpm*
 nvim/.config/gh
 nvim/.config/go
 nvim/.config/htop
