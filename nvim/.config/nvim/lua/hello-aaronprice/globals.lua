@@ -14,12 +14,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
-vim.api.nvim_create_autocmd("BufWritePre", {
-	group = autocmd("BufWritePre"),
-	pattern = "*",
-	command = [[%s/\s\+$//e]],
-})
-
 -- go to last loc when opening a buffer
 vim.api.nvim_create_autocmd("BufReadPost", {
 	group = autocmd("last_loc"),
@@ -67,5 +61,13 @@ vim.api.nvim_create_autocmd("FileType", {
 		})
 	end,
 })
+
+local function set_filetype(pattern, filetype)
+	vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+		pattern = pattern,
+		command = "set filetype=" .. filetype,
+	})
+end
+set_filetype({ "compose.yaml" }, "yaml.docker-compose")
 
 vim.g.netrw_winsize = 25

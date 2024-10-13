@@ -73,6 +73,19 @@ source /home/linuxbrew/.linuxbrew/share/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 
+# ~~~~~~~~~~~~~~~ JavaScript ~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+# pnpm
+export PNPM_HOME="/home/aaron/.dotfiles/.local/share/pnpm"
+case ":$PATH:" in
+    *":$PNPM_HOME:"*) ;;
+    *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+. "/home/aaron/.deno/env"
+
+
 # ~~~~~~~~~~~~~~~ Misc ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -85,11 +98,3 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$DOTFILES/.local/share"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# pnpm
-export PNPM_HOME="/home/aaron/.dotfiles/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
