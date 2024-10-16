@@ -43,6 +43,14 @@ return {
 		},
 		opts = {
 			document_highlight = { enabled = false },
+			servers = {
+				ts_ls = {
+					enable = false,
+				},
+				tsserver = {
+					enable = false,
+				},
+			},
 		},
 		config = function()
 			-- Brief aside: **What is LSP?**
@@ -227,7 +235,52 @@ return {
 				--
 				-- But for many setups, the LSP (`tsserver`) will work just fine
 				-- tsserver = {},
-				--
+				eslint = {
+					settings = {
+						workingDirectories = { mode = "auto" },
+					},
+				},
+				tailwindcss = {
+					filetypes_exclude = { "markdown" },
+				},
+				vtsls = {
+					-- explicitly add default filetypes, so that we can extend
+					-- them in related extras
+					filetypes = {
+						"javascript",
+						"javascriptreact",
+						"javascript.jsx",
+						"typescript",
+						"typescriptreact",
+						"typescript.tsx",
+					},
+					settings = {
+						complete_function_calls = true,
+						vtsls = {
+							enableMoveToFileCodeAction = true,
+							autoUseWorkspaceTsdk = true,
+							experimental = {
+								completion = {
+									enableServerSideFuzzyMatch = true,
+								},
+							},
+						},
+						typescript = {
+							updateImportsOnFileMove = { enabled = "always" },
+							suggest = {
+								completeFunctionCalls = true,
+							},
+							inlayHints = {
+								enumMemberValues = { enabled = true },
+								functionLikeReturnTypes = { enabled = true },
+								parameterNames = { enabled = "literals" },
+								parameterTypes = { enabled = true },
+								propertyDeclarationTypes = { enabled = true },
+								variableTypes = { enabled = false },
+							},
+						},
+					},
+				},
 				lua_ls = {
 					-- cmd = {...},
 					-- filetypes = { ...},
@@ -243,21 +296,77 @@ return {
 					},
 				},
 			}
-			-- Ensure the servers and tools above are installed
-			--  To check the current status of installed tools and/or manually install
-			--  other tools, you can run
-			--    :Mason
-			--
-			--  You can press `g?` for help in this menu.
-			require("mason").setup({
-				ui = {
-					icons = {
-						package_installed = "",
-						package_pending = "",
-						package_uninstalled = "",
+			vtsls =
+				function(_, opts)
+					vim.lsp.on_attach(function(client, buffer)
+						client.commands["_typescript.moveToFileRefactoring"] = function(command, ctx)
+							---@type string, string, lsp.Range
+							local action, uri, range = unpack(command.arguments)
+
+							local function move(newf)
+								client.request("workspace/executeCommand", {
+									command = command.command,
+									arguments = { action, uri, range, newf },
+								})
+							end
+
+							local fname = vim.uri_to_fname(uri)
+							client.request("workspace/executeCommand", {
+								command = "typescript.tsserverRequest",
+								arguments = {
+									"getMoveToRefactoringFileSuggestions",
+									{
+										file = fname,
+										startLine = range.start.line + 1,
+										startOffset = range.start.character + 1,
+										endLine = range["end"].line + 1,
+										endOffset = range["end"].character + 1,
+									},
+								},
+							}, function(_, result)
+								---@type string[]
+								local files = result.body.files
+								table.insert(files, 1, "Enter new path...")
+								vim.ui.select(files, {
+									prompt = "Select move destination:",
+									format_item = function(f)
+										return vim.fn.fnamemodify(f, ":~:.")
+									end,
+								}, function(f)
+									if f and f:find("^Enter new path") then
+										vim.ui.input({
+											prompt = "Enter move destination:",
+											default = vim.fn.fnamemodify(fname, ":h") .. "/",
+											completion = "file",
+										}, function(newf)
+											return newf and move(newf)
+										end)
+									elseif f then
+										move(f)
+									end
+								end)
+							end)
+						end
+					end, "vtsls")
+					-- copy typescript settings to javascript
+					opts.settings.javascript =
+						vim.tbl_deep_extend("force", {}, opts.settings.typescript, opts.settings.javascript or {})
+				end,
+				-- Ensure the servers and tools above are installed
+				--  To check the current status of installed tools and/or manually install
+				--  other tools, you can run
+				--    :Mason
+				--
+				--  You can press `g?` for help in this menu.
+				require("mason").setup({
+					ui = {
+						icons = {
+							package_installed = "",
+							package_pending = "",
+							package_uninstalled = "",
+						},
 					},
-				},
-			})
+				})
 			-- You can add other tools here that you want Mason to install
 			-- for you, so that they are available from within Neovim.
 			local ensure_installed = vim.tbl_keys(servers or {})
@@ -268,7 +377,6 @@ return {
 				"docker_compose_language_service",
 				"gopls",
 				"terraformls",
-				"yamlls",
 				"codelldb",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })

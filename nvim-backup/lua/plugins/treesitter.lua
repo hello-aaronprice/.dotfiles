@@ -18,6 +18,8 @@ return { -- Highlight, edit, and navigate code
 			"vimdoc",
 			"rust",
 			"toml",
+			"json",
+			"yaml",
 		},
 
 		-- Autoinstall languages that are not installed

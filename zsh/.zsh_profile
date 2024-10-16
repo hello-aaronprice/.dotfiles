@@ -43,7 +43,8 @@ alias ld="ls -D -s=modified"
 alias ldir="ld"
 alias lf="ls -f -s=modified"
 alias lfile="lf"
-alias ltree="ls -A --tree --level=2"
+alias lt="ls -A --tree --level=2"
+alias ltr="ls -A --tree --level=4"
 
 # Always enable colored `grep` output
 alias grep='grep --color=auto '
