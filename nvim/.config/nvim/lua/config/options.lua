@@ -57,6 +57,9 @@ vim.g.bigfile_size = 1024 * 1024 * 1.5 -- 1.5 MB
 -- You can disable this for a buffer by setting `vim.b.trouble_lualine = false`
 vim.g.trouble_lualine = true
 
+-- LSP Server to use for Python3
+vim.g.lazyvim_python_lsp = "pyright"
+
 local opt = vim.opt
 
 opt.autowrite = true -- Enable auto write
