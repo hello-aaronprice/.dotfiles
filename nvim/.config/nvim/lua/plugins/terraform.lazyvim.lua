@@ -7,7 +7,10 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        terraformls = {},
+        terraformls = {
+          -- cmd = { "terraform-ls", "serve" },
+          -- filetypes = { "terraform", "terraform-vars" },
+        },
       },
     },
   },

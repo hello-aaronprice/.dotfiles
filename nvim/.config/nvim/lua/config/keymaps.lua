@@ -77,6 +77,10 @@ map("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
 map("v", "<", "<gv")
 map("v", ">", ">gv")
 
+-- Move selection
+map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
+
 -- commenting
 map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below" })
 map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Above" })
@@ -124,7 +128,7 @@ LazyVim.toggle.map("<leader>uw", LazyVim.toggle("wrap", { name = "Wrap" }))
 LazyVim.toggle.map("<leader>uL", LazyVim.toggle("relativenumber", { name = "Relative Number" }))
 LazyVim.toggle.map("<leader>ud", LazyVim.toggle.diagnostics)
 LazyVim.toggle.map("<leader>ul", LazyVim.toggle.number)
-LazyVim.toggle.map( "<leader>uc", LazyVim.toggle("conceallevel", { values = { 0, vim.o.conceallevel > 0 and vim.o.conceallevel or 2 } }))
+LazyVim.toggle.map("<leader>uc", LazyVim.toggle("conceallevel", { values = { 0, vim.o.conceallevel > 0 and vim.o.conceallevel or 2 } }))
 LazyVim.toggle.map("<leader>uT", LazyVim.toggle.treesitter)
 LazyVim.toggle.map("<leader>ub", LazyVim.toggle("background", { values = { "light", "dark" }, name = "Background" }))
 if vim.lsp.inlay_hint then
@@ -192,5 +196,6 @@ map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
 -- Yank to system
+map("v", "y", "ygv<esc>", { desc = "Yank and move cursor to original position"})
 map({"n", "v"}, "<leader>y", [[+y]], { desc = "Yank to system clipboard"})
 map("n",  "<leader>Y", [[+Y]], { desc = "Yank to system clipboard"})
