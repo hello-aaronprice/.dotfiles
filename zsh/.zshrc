@@ -98,3 +98,6 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$DOTFILES/.local/share"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Turso
+export PATH="$PATH:/home/aaron/.turso"
