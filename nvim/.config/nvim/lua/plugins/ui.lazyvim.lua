@@ -174,7 +174,7 @@ return {
 
       local opts = {
         options = {
-          theme = "auto",
+          theme = "catppuccin",
           globalstatus = vim.o.laststatus == 3,
           disabled_filetypes = { statusline = { "dashboard", "alpha", "ministarter" } },
         },

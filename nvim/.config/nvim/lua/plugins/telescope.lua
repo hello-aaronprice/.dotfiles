@@ -93,10 +93,10 @@ return { -- Fuzzy Finder (files, lsp, etc)
       "n",
       "<leader>sg",
       "<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
-      { desc = "Live Grep" }
+      { desc = "[S]earch [G]rep" }
     )
     local builtin = require("telescope.builtin")
-    vim.keymap.set("n", "<C-p>", builtin.git_files, { desc = "Search GitFiles" })
+    vim.keymap.set("n", "<C-p>", builtin.git_files, { desc = "Search [P]roject" })
     vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
     vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
     vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
@@ -130,6 +130,18 @@ return { -- Fuzzy Finder (files, lsp, etc)
       builtin.find_files({ cwd = vim.fn.stdpath("config") })
     end, { desc = "[S]earch [N]eovim files" })
 
-    vim.keymap.set("n", "<leader>az", "<cmd>Telescope terraform_doc full_name=hashicorp/azurerm<cr>", { silent = true })
+    -- Shortcut for searching Terraform Documentation
+    vim.keymap.set(
+      "n",
+      "<leader>az",
+      "<cmd>Telescope terraform_doc full_name=hashicorp/azurerm<cr>",
+      { silent = true, desc = "Search Azure Terraform documentation" }
+    )
+    vim.keymap.set(
+      "n",
+      "<leader>aws",
+      "<cmd>Telescope terraform_doc full_name=hashicorp/aws<cr>",
+      { silent = true, desc = "Search AWS Terraform documentation" }
+    )
   end,
 }
