@@ -52,6 +52,9 @@ map(
   { desc = "Redraw / Clear hlsearch / Diff Update" }
 )
 
+-- Search and reaplace word under cursor
+-- map("n", "<leader>srw", "[[:%s/<<C-r><C-w>/<C-r><C-w>/gI<Left><Left><Left>]]", { desc = "Replace word under cursor" })
+
 -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
 map("n", "n", "'Nn'[v:searchforward].'zzzv'", { expr = true, desc = "Next Search Result" })
 map("x", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result" })
