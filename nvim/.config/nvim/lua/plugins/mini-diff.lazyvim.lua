@@ -2,6 +2,7 @@ return {
   {
     "echasnovski/mini.diff",
     event = "VeryLazy",
+    enabled = false,
     keys = {
       {
         "<leader>go",
