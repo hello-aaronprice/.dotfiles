@@ -63,7 +63,7 @@ return {
   },
   {
     "catppuccin/nvim",
-    lazy = true,
+    lazy = false,
     name = "catppuccin",
     opts = {
       flavour = "catppuccin-mocha",
@@ -114,5 +114,10 @@ return {
         which_key = true,
       },
     },
+  },
+  {
+    "projekt0n/github-nvim-theme",
+    name = "github-theme",
+    opts = {},
   },
 }
