@@ -66,7 +66,7 @@ return {
     lazy = false,
     name = "catppuccin",
     opts = {
-      flavour = "catppuccin-mocha",
+      --flavour = "catppuccin-mocha",
       dim_inactive = {
         enabled = true,
         shade = "dark",
