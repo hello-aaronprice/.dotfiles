@@ -6,13 +6,21 @@ local config = wezterm.config_builder()
 
 -- This is where you actually apply your config choices
 
-config.font = wezterm.font("MesloLGSDZ Nerd Font Mono")
+-- config.color_scheme = 'Afterglow'
+-- config.color_scheme = 'Github Dark (Gogh)'
+config.color_scheme = "Rosé Pine (Gogh)"
+
+config.colors = {
+	foreground = "#d8d8d8",
+	background = "#181818",
+}
+
+-- config.font = wezterm.font("MesloLGSDZ Nerd Font Mono")
+
+config.font = wezterm.font("0xProto Nerd Font Mono")
+config.font = wezterm.font_with_fallback({ "JetBrainsMono NFM" })
 config.font_size = 9
-
 config.enable_tab_bar = false
-
--- config.window_decorations = "NONE"
+-- config.window_decorations = "RESIZE"
 config.window_background_opacity = 0.9
-
--- and finally, return the configuration to wezterm
 return config
