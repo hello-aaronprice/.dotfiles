@@ -1,6 +1,10 @@
 .bkp/*
+*.xbel
 .local/share/nvim*
 .local/share/pnpm*
+.local/share/epiphany*
+.local/share/zed*
+.local/share/flatpak*
 nvim/.config/gh
 nvim/.config/go
 nvim/.config/htop
