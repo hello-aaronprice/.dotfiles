@@ -8,8 +8,6 @@ fi
 # ~~~~~~~~~~~~~~~ Environment Variables ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-# Set to superior editing mode
-
 set -o vi
 
 export VISUAL=nvim
@@ -24,8 +22,12 @@ export GITUSER="hello-aaronprice"
 export GHREPOS="$REPOS/github.com/$GITUSER"
 export DOTFILES="$HOME/.dotfiles"
 export SCRIPTS="$DOTFILES/bin/.local/scripts"
+
+# Go
+
 export GOPATH="$HOME/go"
 export GOBIN="$HOME/go/bin"
+
 
 # ~~~~~~~~~~~~~~~ Path configuration ~~~~~~~~~~~~~~~~~~~~~~~~
 

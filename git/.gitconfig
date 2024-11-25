@@ -1,0 +1,8 @@
+[user]
+	email = hello-aaronprice@outlook.com
+	name = Aaron Price
+[init]
+	defaultBranch = main
+
+[includeIf "gitdir:~/Jayride/"]
+  path = ~/.gitconfig-jayride
