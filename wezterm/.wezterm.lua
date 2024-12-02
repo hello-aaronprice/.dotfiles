@@ -17,11 +17,7 @@ config.colors = {
 
 -- config.font = wezterm.font("MesloLGSDZ Nerd Font Mono")
 
-config.font = wezterm.font("0xProto Nerd Font")
-config.font = wezterm.font_with_fallback({
-	"JetBrainsMono NFM",
-	"Fira Code",
-})
+config.font = wezterm.font("0xProto Nerd Font Mono")
 config.font_size = 9
 config.enable_tab_bar = false
 -- config.window_decorations = "RESIZE"

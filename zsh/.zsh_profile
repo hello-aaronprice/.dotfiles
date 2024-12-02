@@ -6,6 +6,7 @@ alias e="exit"
 alias :q="exit"
 alias v="nvim"
 alias vim="nvim"
+alias fzn='nvim $(fzf)'
 alias t="tmux"
 
 # finds all files recursively and sorts by last modification, ignore hidden files

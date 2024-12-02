@@ -69,6 +69,8 @@ setopt SHARE_HISTORY      # Share history between sessions
 # ~~~~~~~~~~~~~~~ Prompt ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+autoload -Uz compinit; compinit
+source <(kubectl completion zsh)
 source /home/linuxbrew/.linuxbrew/share/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -93,13 +95,12 @@ esac
 
 fpath=($DOTFILES/zsh/zsh-completions/src $fpath)
 
-source ~/.zsh_profile
-
 export XDG_CONFIG_HOME="$HOME/.config"
-# This is not the best idea
-export XDG_DATA_HOME="$DOTFILES/.local/share"
+export XDG_DATA_HOME="$DOTFILES/.local/share"  # This is not the best idea
 
+# FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Turso
 export PATH="$PATH:/home/aaron/.turso"
+source ~/.zsh_profile
