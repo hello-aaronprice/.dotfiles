@@ -6,7 +6,7 @@ return {
 		---@type snacks.Config
 		opts = {
 			bigfile = { enabled = true },
-			dashboard = { enabled = true },
+			dashboard = { example = "advanced" },
 			notifier = {
 				enabled = true,
 				timeout = 3000,

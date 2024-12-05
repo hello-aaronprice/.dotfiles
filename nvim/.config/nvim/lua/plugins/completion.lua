@@ -64,6 +64,10 @@ return {
 				Event = "",
 				Operator = "󰆕",
 				TypeParameter = "󰅲",
+				Error = " ",
+				Warn = " ",
+				Hint = " ",
+				Info = " ",
 			}
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
