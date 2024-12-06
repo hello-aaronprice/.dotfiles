@@ -29,7 +29,6 @@ return {
 		},
 		config = function(_, opts)
 			local M = {}
-
 			local lint = require("lint")
 			for name, linter in pairs(opts.linters) do
 				if type(linter) == "table" and type(lint.linters[name]) == "table" then

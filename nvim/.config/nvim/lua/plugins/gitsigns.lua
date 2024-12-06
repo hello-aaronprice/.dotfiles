@@ -10,13 +10,18 @@ return {
 				topdelete = { text = "‾" },
 				changedelete = { text = "~" },
 			},
+			signs_staged = {
+				add = { text = "▎" },
+				change = { text = "▎" },
+				delete = { text = "" },
+				topdelete = { text = "" },
+				changedelete = { text = "▎" },
+			},
 			on_attach = function(buffer)
 				local gs = package.loaded.gitsigns
-
 				local function map(mode, l, r, desc)
 					vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
 				end
-
       -- stylua: ignore start
       map("n", "]h", function()
         if vim.wo.diff then

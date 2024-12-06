@@ -32,12 +32,6 @@ return {
 			local ret = {
 				-- options for vim.diagnostic.config()
 				---@type vim.diagnostic.Opts
-				diagnostic_icons = {
-					Error = " ",
-					Warn = " ",
-					Hint = " ",
-					Info = " ",
-				},
 				diagnostics = {
 					underline = true,
 					update_in_insert = false,
@@ -87,8 +81,10 @@ return {
 					formatting_options = nil,
 					timeout_ms = nil,
 				},
-				-- LSP Server Settings
-				---@type lspconfig.options
+				servers = {},
+				setup = {
+					["*"] = function(server, opts) end,
+				},
 			}
 			return ret
 		end,
@@ -204,6 +200,7 @@ return {
 					end
 				end,
 			})
+
 			-- Change diagnostic symbols in the sign column (gutter)
 			if vim.g.have_nerd_font then
 				local signs = { ERROR = "", WARN = "", INFO = "", HINT = "" }
@@ -221,9 +218,8 @@ return {
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
-			-- Enable the following language servers
+			--  Enable the following language servers
 			--  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-			--
 			--  Add any additional override configuration in the following tables. Available keys are:
 			--  - cmd (table): Override the default command used to start the server
 			--  - filetypes (table): Override the default list of associated filetypes for the server
@@ -231,43 +227,113 @@ return {
 			--  - settings (table): Override the default settings passed when initializing the server.
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 			local servers = {
-				-- clangd = {},
-				gopls = {},
-				pyright = {},
-				rust_analyzer = {},
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-				--
 				-- Some languages (like typescript) have entire language plugins that can be useful:
 				--    https://github.com/pmizio/typescript-tools.nvim
-				--
 				-- But for many setups, the LSP (`ts_ls`) will work just fine
 				-- ts_ls = {},
+				dockerls = {
+					settings = {
+						docker = {
+							languageserver = {
+								formatter = {
+									ignoreMultilineInstructions = true,
+								},
+							},
+						},
+					},
+				},
+				gopls = {
+					settings = {
+						gopls = {
+							gofumpt = true,
+							codelenses = {
+								gc_details = false,
+								generate = true,
+								regenerate_cgo = true,
+								run_govulncheck = true,
+								test = true,
+								tidy = true,
+								upgrade_dependency = true,
+								vendor = true,
+							},
+							hints = {
+								assignVariableTypes = true,
+								compositeLiteralFields = true,
+								compositeLiteralTypes = true,
+								constantValues = true,
+								functionTypeParameters = true,
+								parameterNames = true,
+								rangeVariableTypes = true,
+							},
+							analyses = {
+								fieldalignment = true,
+								nilness = true,
+								unusedparams = true,
+								unusedwrite = true,
+								useany = true,
+							},
+							usePlaceholders = true,
+							completeUnimported = true,
+							staticcheck = true,
+							directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
+							semanticTokens = true,
+						},
+					},
+				},
+				pyright = {},
+				rust_analyzer = {
+					settings = {
+						["rust-analyzer"] = {
+							diagnostics = {
+								enable = true,
+							},
+						},
+					},
+				},
 				--
-
 				lua_ls = {
-					-- cmd = {...},
-					-- filetypes = { ...},
-					-- capabilities = {},
+					capabilities = {},
 					settings = {
 						Lua = {
 							completion = {
 								callSnippet = "Replace",
+							},
+							hint = {
+								enable = true,
+								setType = false,
+								paramType = true,
+								paramName = "Disable",
+								semicolon = "Disable",
+								arrayIndex = "Disable",
 							},
 							-- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
 							-- diagnostics = { disable = { 'missing-fields' } },
 						},
 					},
 				},
+				jsonls = {
+					-- lazy-load schemastore when needed
+					on_new_config = function(new_config)
+						new_config.settings.json.schemas = new_config.settings.json.schemas or {}
+						vim.list_extend(new_config.settings.json.schemas, require("schemastore").json.schemas())
+					end,
+					settings = {
+						json = {
+							format = {
+								enable = true,
+							},
+							validate = { enable = true },
+						},
+					},
+				},
 			}
-
 			-- Ensure the servers and tools above are installed
 			--  To check the current status of installed tools and/or manually install
 			--  other tools, you can run
 			--    :Mason
-			--
 			--  You can press `g?` for help in this menu.
 			require("mason").setup()
-
 			-- You can add other tools here that you want Mason to install
 			-- for you, so that they are available from within Neovim.
 			local ensure_installed = vim.tbl_keys(servers or {})
@@ -275,7 +341,6 @@ return {
 				"stylua", -- Used to format Lua code
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
-
 			require("mason-lspconfig").setup({
 				handlers = {
 					function(server_name)
@@ -288,6 +353,45 @@ return {
 					end,
 				},
 			})
+		end,
+	},
+	{
+		"mason.nvim",
+		{ "williamboman/mason-lspconfig.nvim", config = function() end },
+	},
+	{
+		"williamboman/mason.nvim",
+		cmd = "Mason",
+		keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
+		build = ":MasonUpdate",
+		opts_extend = { "ensure_installed" },
+		opts = {
+			ensure_installed = {
+				"stylua",
+				"shfmt",
+			},
+		},
+		---@param opts MasonSettings | {ensure_installed: string[]}
+		config = function(_, opts)
+			require("mason").setup(opts)
+			local mr = require("mason-registry")
+			mr:on("package:install:success", function()
+				vim.defer_fn(function()
+					-- trigger FileType event to possibly load this newly installed LSP server
+					require("lazy.core.handler.event").trigger({
+						event = "FileType",
+						buf = vim.api.nvim_get_current_buf(),
+					})
+				end, 100)
+			end)
+			mr.refresh(function()
+				for _, tool in ipairs(opts.ensure_installed) do
+					local p = mr.get_package(tool)
+					if not p:is_installed() then
+						p:install()
+					end
+				end
+			end)
 		end,
 	},
 }

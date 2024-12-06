@@ -1,13 +1,24 @@
 local map = vim.keymap.set
 
+-- Personal keymaps
+-- Centered scrolling
 map({ "n", "v" }, "<C-d>", "<C-d>zz", { desc = "Centered Down" })
 map({ "n", "v" }, "<C-u>", "<C-u>zz", { desc = "Centered Up" })
 
-map({ "n", "x", "o" }, "gy", '"+y', { desc = "Copy to clipboard" })
-map({ "n", "x", "o" }, "gp", '"+p', { desc = "Paste from clipboard" })
+-- Line navigation
+map("n", "<s-h>", "^", { desc = "Start of line" })
+map("n", "<s-l>", "$", { desc = "End of line" })
 
+-- Clipboard QoL
+map({ "n", "x", "o" }, "<leader>y", '"+y', { desc = "Copy to clipboard" })
+map({ "n", "x", "o" }, "<leader>p", '"+p', { desc = "Paste from clipboard" })
+map({ "n", "x", "o" }, "<leader>P", '"+P', { desc = "Paste from clipboard" })
+
+-- Select All
 map({ "n", "i" }, "<C-a>", "ggVG", { desc = "Select All" })
--- This file is automatically loaded by lazyvim.config.init
+
+-- Duplicate a line and comment out the first line
+map("n", "yc", "yygccp", { desc = "Duplicate line below comment top line" })
 
 -- better up/down
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
@@ -32,12 +43,10 @@ map("n", "<A-j>", "<cmd>execute 'move .+' . v:count1<cr>==", { desc = "Move Down
 map("n", "<A-k>", "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==", { desc = "Move Up" })
 map("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move Down" })
 map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move Up" })
-map("v", "<A-j>", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { desc = "Move Down" })
-map("v", "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = "Move Up" })
+map("v", "K", ":m '>-2<CR>gv=gv", { desc = "Move Up" })
+map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move Down" })
 
 -- buffers
-map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
-map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 map("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
@@ -49,6 +58,9 @@ map("n", "<leader>bo", function()
 	Snacks.bufdelete.other()
 end, { desc = "Delete Other Buffers" })
 map("n", "<leader>bD", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
+
+-- Search Replace word
+map({ "n" }, "<leader>srw", "[[:%s/<<C-r><C-w>>//g<Left><Left>]]", { desc = "[S]earch [R]eplace [W]ord" })
 
 -- Clear search with <esc>
 map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and Clear hlsearch" })
@@ -74,9 +86,6 @@ map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result
 map("i", ",", ",<c-g>u")
 map("i", ".", ".<c-g>u")
 map("i", ";", ";<c-g>u")
-
--- save file
-map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 
 --keywordprg
 map("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
@@ -158,7 +167,6 @@ map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
 -- highlights under cursor
 map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 map("n", "<leader>uI", "<cmd>InspectTree<cr>", { desc = "Inspect Tree" })
-
 
 -- floating terminal
 map("n", "<leader>ft", function() Snacks.terminal() end, { desc = "Terminal (Root Dir)" })
