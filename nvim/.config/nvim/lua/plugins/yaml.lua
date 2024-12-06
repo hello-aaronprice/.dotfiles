@@ -46,9 +46,7 @@ return {
 					},
 				},
 			},
-			setup = {
-				yamlls = {},
-			},
+			setup = {},
 		},
 	},
 }
