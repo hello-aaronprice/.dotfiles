@@ -1,10 +1,12 @@
 return {
 	{
 		"williamboman/mason.nvim",
+		ft = "markdown",
 		opts = { ensure_installed = { "markdownlint-cli2", "markdown-toc" } },
 	},
 	{
 		"neovim/nvim-lspconfig",
+		ft = "markdown",
 		opts = {
 			servers = {
 				marksman = {},

@@ -1,3 +1,9 @@
+vim.filetype.add({
+	extension = {
+		yaml = "yaml",
+	},
+})
+
 return {
 	{
 		"b0o/SchemaStore.nvim",
@@ -6,6 +12,8 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
+		ft = "yaml",
+		enabled = true,
 		opts = {
 			-- make sure mason installs the server
 			servers = {

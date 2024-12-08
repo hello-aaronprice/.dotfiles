@@ -2,6 +2,7 @@ return {
 	-- formatting
 	{
 		"stevearc/conform.nvim",
+		ft = "go",
 		opts = {
 			formatters_by_ft = {
 				go = { "goimports", "gofumpt" },
@@ -11,6 +12,7 @@ return {
 	-- treesitter
 	{
 		"nvim-treesitter/nvim-treesitter",
+		ft = "go",
 		opts = function(_, opts)
 			vim.list_extend(opts.ensure_installed, {
 				"go",
@@ -27,6 +29,7 @@ return {
 	-- LSP
 	{
 		"neovim/nvim-lspconfig",
+		ft = "go",
 		opts = {
 			servers = {
 				gopls = {

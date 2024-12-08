@@ -1,3 +1,9 @@
+vim.filetype.add({
+	extension = {
+		svelte = "svelte",
+	},
+})
+
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -6,6 +12,7 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		ft = "svelte",
+		enabled = true,
 		opts = {
 			servers = {
 				svelte = {},

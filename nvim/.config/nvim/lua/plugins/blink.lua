@@ -104,6 +104,7 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
+		event = "VimEnter",
 		dependencies = {
 			"saghen/blink.cmp",
 			{ "williamboman/mason.nvim", config = true }, -- NOTE: Must be loaded before dependants

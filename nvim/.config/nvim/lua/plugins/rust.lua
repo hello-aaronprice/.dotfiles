@@ -18,6 +18,7 @@ return {
 	},
 	{
 		"nvim-treesitter/nvim-treesitter",
+		ft = { "rust" },
 		opts = { ensure_installed = { "rust", "ron" } },
 	},
 	{
@@ -70,6 +71,7 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
+		ft = { "rust" },
 		opts = {
 			servers = {
 				rust_analyzer = { enabled = false },
@@ -79,6 +81,7 @@ return {
 	-- formatting
 	{
 		"stevearc/conform.nvim",
+		ft = { "rust" },
 		opts = {
 			formatters_by_ft = {
 				rust = { "rustfmt" },
