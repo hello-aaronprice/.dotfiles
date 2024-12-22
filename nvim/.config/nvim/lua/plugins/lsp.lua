@@ -20,6 +20,10 @@ return {
           },
         },
       },
+      {
+        "b0o/SchemaStore.nvim",
+        version = false, -- last release is way too old
+      }
     },
     opts = {
       document_highlight = { enabled = true },
@@ -49,7 +53,7 @@ return {
                 rangeVariableTypes = true,
               },
               analyses = {
-                fieldalignment = true,
+                -- fieldalignment = true,
                 nilness = true,
                 unusedparams = true,
                 unusedwrite = true,
@@ -66,14 +70,36 @@ return {
         terraformls = {},
         dockerls = {},
         docker_compose_language_service = {},
+        jsonls = {
+          on_new_config = function(new_config)
+            new_config.settings.json.schemas = new_config.settings.json.schemas or {}
+            vim.list_extend(new_config.settings.json.schemas, require("schemastore").json.schemas())
+          end,
+          settings = {
+            json = {
+              format = {
+                enable = true,
+              },
+              validate = { enable = true },
+            },
+          },
+        },
+        rust_analyzer = {},
+        azure_pipelines_ls = {
+          yaml = {
+            schemas = {
+              ["https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json"] = {
+                "/azure-pipeline*.y*l",
+                "/*.azure*",
+                "Azure-Pipelines/**/*.y*l",
+                "Pipelines/*.y*l",
+              },
+            },
+          },
+        },
       },
     },
     config = function(_, opts)
-      -- LSP Servers setup
-      -- require('lspconfig').lua_ls.setup {}
-      -- require('lspconfig').gopls.setup {}
-      -- require('lspconfig.ui.windows').default_options.border = vim.g.borderStyle
-
       -- LSP Capabilities setup
       local lspconfig = require('lspconfig')
       for server, config in pairs(opts.servers) do
@@ -84,10 +110,16 @@ return {
       -- LSP Attach autocmd
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
+          vim.keymap.set('n', 'grn', vim.lsp.buf.rename)
+          vim.keymap.set('n', 'gra', vim.lsp.buf.code_action)
+          vim.keymap.set('n', 'grr', vim.lsp.buf.references)
+          vim.keymap.set('n', 'gri', vim.lsp.buf.implementation)
+          vim.keymap.set('n', 'gO', vim.lsp.buf.document_symbol)
+          vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help)
+
           local client = vim.lsp.get_client_by_id(args.data.client_id)
           if not client then return end
-          ---@diagnostic disable-next-line: missing-parameter
-          -- LSP Formatting
+          -- LSP autoformat buffer
           if client.supports_method('textDocument/formatting') then
             vim.api.nvim_create_autocmd('BufWritePre', {
               buffer = args.buf,
@@ -96,8 +128,9 @@ return {
               end,
             })
           end
+          -- LSP Document Highlights
           if client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
-            local highlight_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
+            local highlight_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = true })
             vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
               buffer = args.buf,
               group = highlight_augroup,
@@ -116,10 +149,30 @@ return {
               end,
             })
           end
-          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-            vim.keymap.set("n", "<leader>th", function()
-              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = args.buf }))
-            end, { desc = "[t]oggle [h]ints" })
+          -- LSP Hints
+          if client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+            local inlay_hints = vim.api.nvim_create_augroup("lsp-inlayhint", { clear = true })
+            vim.api.nvim_create_autocmd('BufEnter', {
+              group = inlay_hints,
+              buffer = args.buf,
+              callback = function()
+                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = args.buf }))
+              end
+            })
+            vim.api.nvim_create_autocmd('InsertEnter', {
+              group = inlay_hints,
+              buffer = args.buf,
+              callback = function()
+                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = args.buf }))
+              end
+            })
+            vim.api.nvim_create_autocmd('InsertLeave', {
+              group = inlay_hints,
+              buffer = args.buf,
+              callback = function()
+                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = args.buf }))
+              end
+            })
           end
         end,
       })

@@ -1,6 +1,7 @@
 .bkp/*
 *.xbel
 .local/share/nvim*
+.local/share/user-*
 .local/share/NuGet*
 .local/share/Trash*
 .local/share/pnpm*
