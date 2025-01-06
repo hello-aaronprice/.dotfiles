@@ -6,10 +6,10 @@ return {
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     keys = {
       { "<c-space>", desc = "Increment Selection" },
-      { "<bs>",      desc = "Decrement Selection", mode = "x" },
+      { "<bs>", desc = "Decrement Selection", mode = "x" },
     },
     config = function()
-      require('nvim-treesitter.configs').setup {
+      require("nvim-treesitter.configs").setup({
         ensure_installed = { "lua", "vim", "vimdoc", "luadoc", "markdown", "markdown_inline" },
         sync_install = false,
         auto_install = true,
@@ -37,7 +37,7 @@ return {
         },
         modules = {},
         ignore_install = {},
-      }
-    end
+      })
+    end,
   },
 }
